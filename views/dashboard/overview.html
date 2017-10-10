@@ -1,4 +1,6 @@
-<div> <snap-drawer> <div class=snap-menu>
+<div>
+  <snap-drawer>
+    <div class=snap-menu>
   <div class="sidebar-header text-center">
     <img src=images/flat-avatar.png class="sidebar-img img-circle">
    </div>
@@ -8,31 +10,59 @@
    </li>
      <li ng-class="{active: $state.includes('reports')}">
        <a ui-sref=reports>REPORTS</a></li> <li><a ui-sref=login>LOGOUT</a>
-       </li> <li><a href=http://strapui.com>MORE PREMIUM THEMES</a>
        </li>
-      </ul> </div>
-      </snap-drawer> <snap-dragger></snap-dragger> <snap-content snap-opt-tap-to-close=false>
-         <a snap-toggle=left ng-click="menuOpen = !menuOpen"> <span class=menutoggle> <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i>
-            <i ng-show=menuOpen class="fa fa-times fa-2x"></i> </span> </a> <div class=fr>
-              <h2>Overview <small>Why is Versatile Theme so awesome?</small></h2> </div> <div class=jumbotron>
+       <li>
+         <a href=http://strapui.com>MORE PREMIUM THEMES</a>
+       </li>
+      </ul>
+    </div>
+      </snap-drawer>
+      <snap-content snap-opt-tap-to-close=false>
+         <a snap-toggle=left ng-click="menuOpen = !menuOpen">
+           <span class=menutoggle>
+             <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i>
+            <i ng-show=menuOpen class="fa fa-times fa-2x"></i>
+          </span>
+          </a>
+           <div class=jumbotron>
               <div class=container>
-                <h1>Welcome {{username}}!</h1> I don't want to bloat this Versatile Theme Free Edition AngularJS Admin theme with a lot of plugins. To install plugins we have bower. Let's keep it real clean!<br><br>
-                 <p> <a ui-sref=login class="btn btn-primary btn-lg btn-white">Logout</a>
-                 </p> </div> </div>
+                <h1>Welcome {{username}}!</h1>
+                <div class="form-group col-md-3">
+                  <input type="text" class="form-control input-lg" ng-model="searchString">
+                </div>
+                 <p>
+                   <a ui-sref=login class="btn btn-primary btn-lg btn-white">Logout</a>
+                 </p>
+               </div>
+              </div>
+              <div class="col-sm-3"></div>
+                <div class="col-12 col-sm-6 col-lg-4">
                  <table class="table">
                  <thead class="thead-inverse">
                  <tr>
-                   <th>Title</th>
-                   <th>Duration</th>
-                   <th>director</th>
+                   <th>name</th>
+                   <th>Famille</th>
+                   <th>Age</th>
+                   <th>race</th>
+                   <th>Action</th>
+
                  </tr>
                  </thead>
                  <tbody >
-                 <tr ng-repeat="insecte in insectes">
+                 <tr ng-repeat="insecte in insectes | searchFor:searchString">
                    <td>{{insecte.username}}</td>
+                   <td>{{insecte.famille}}</td>
+                   <td>{{insecte.age}}</td>
+                   <td>{{insecte.race}}</td>
+                   <td><a  type="submit" ng-click="addfriend(insecte.id)"  class="button">Ajouter </a></td>
+                   <td ng-repeat=" ins in insecte.myInsectes">{{ins.username}}</td>
+                   <td ng-repeat=" inse in insecte.Insectes">{{inse.username}}</td>
+
+
                  </tr>
                </tbody>
              </table>
+           </div>
 
 
 

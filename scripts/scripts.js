@@ -34,31 +34,42 @@ yapp.config(["$stateProvider","$urlRouterProvider",function(r,t){
     }
 
   }])
+
   yapp.controller("DashboardCtrl",["$scope","$state","$window","jwtHelper","$http",function(r,t,w,jwtHelper,http){
     r.$state=t;
     var exptoken= jwtHelper.decodeToken(w.sessionStorage.token);
     r.username=exptoken.username;
     http.get("http://localhost/Apartoo/web/app_dev.php/Test/insecte/"+exptoken.username).success(function (data,status) {
+
       r.insectes = data.insectes ;
-    
-        })  .error(function(status) {
+      console.log(data.insectes);
+        }).error(function(status)
+         {
               console.log("Error");
 
-          });;
+          })
+          r.addfriend=function (id) {
+        console.log(id);
+       http.get('http://localhost/Apartoo/web/app_dev.php/Test/insecte/'+id+'/'+exptoken.username+'/add').success(function (response) {
 
+         console.log('success');
+})
+}
 
   }]);
 
-
-
-
-/*  yapp.controller('APIcons', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
-    console.log("Profile Controller reporting for duty.");
-    ///Affichage
-    function updatelist(){
-        $scope.interact = false;
-$http.get("http://localhost:3000/reclamation/get").success(function (recdata, status) {
-
-        $scope.reclamation = recdata;
-    });
-*/
+  yapp.filter('searchFor', function(){
+  	return function(arr, searchString){
+  		if(!searchString){
+  			return arr;
+  		}
+  		var result = [];
+  		searchString = searchString.toLowerCase();
+  		angular.forEach(arr, function(insecte){
+  			if(insecte.username.toLowerCase().indexOf(searchString) !== -1){
+  				result.push(insecte);
+  			}
+  		});
+  		return result;
+  	};
+  })
